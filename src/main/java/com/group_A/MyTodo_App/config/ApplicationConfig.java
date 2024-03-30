@@ -1,7 +1,7 @@
 package com.group_A.MyTodo_App.config;
 
 import com.group_A.MyTodo_App.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Configuration;
 
 
@@ -18,9 +18,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ApplicationConfig {
+
   private final UserRepository userRepository;
+
+  public ApplicationConfig(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   @Bean
   public PasswordEncoder passwordEncoder(){
@@ -44,8 +49,4 @@ public class ApplicationConfig {
     return config.getAuthenticationManager();
   }
 
-//  @Bean
-//  public JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint() {
-//    return new JwtAuthenticationEntryPoint();
-//  }
 }
