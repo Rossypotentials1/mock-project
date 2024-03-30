@@ -2,6 +2,7 @@ package com.group_A.MyTodo_App.controller;
 
 import com.group_A.MyTodo_App.dto.TaskDto;
 import com.group_A.MyTodo_App.entity.Task;
+import com.group_A.MyTodo_App.enums.Status;
 import com.group_A.MyTodo_App.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,21 @@ public class TaskController {
     @PutMapping("/tasks/{taskId}")
     public Task updateTask(@PathVariable Long taskId, @RequestBody TaskDto taskUpdateDto){
         return taskService.updateTask(taskId, taskUpdateDto);
+    }
+
+    @DeleteMapping("/deleteTask/{taskId}")
+    public Task deleteTask(@PathVariable Long taskId){
+        return taskService.deleteTask(taskId);
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<TaskDto>> getTaskByStatus(@PathVariable Status status) {
+        List<TaskDto> taskStatus = taskService.getTaskByStatus(status);
+        if (taskStatus != null) {
+            return new ResponseEntity<>(taskStatus, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
 

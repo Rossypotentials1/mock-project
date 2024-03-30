@@ -2,6 +2,7 @@ package com.group_A.MyTodo_App.service;
 
 import com.group_A.MyTodo_App.dto.TaskDto;
 import com.group_A.MyTodo_App.entity.Task;
+import com.group_A.MyTodo_App.enums.Status;
 import com.group_A.MyTodo_App.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public interface TaskService {
     TaskDto createTask(TaskDto taskDTO);
     TaskDto getTaskByTitle(String title);
     TaskDto getTaskById(Long id);
+    public Task deleteTask(Long taskId);
+    List<TaskDto> getTaskByStatus(Status status);
 
 }
 

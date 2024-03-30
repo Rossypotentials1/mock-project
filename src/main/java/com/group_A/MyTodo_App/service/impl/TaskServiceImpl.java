@@ -2,6 +2,7 @@ package com.group_A.MyTodo_App.service.impl;
 
 import com.group_A.MyTodo_App.dto.TaskDto;
 import com.group_A.MyTodo_App.entity.Task;
+import com.group_A.MyTodo_App.enums.Status;
 import com.group_A.MyTodo_App.exceptions.TaskNotFoundException;
 import com.group_A.MyTodo_App.repository.TaskRepository;
 import com.group_A.MyTodo_App.service.TaskService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,6 +84,44 @@ public class TaskServiceImpl implements TaskService {
 
         return taskRepository.save(task);
     }
+
+    @Override
+    public Task deleteTask(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id " + taskId));
+        taskRepository.delete(task);
+
+        return task;
+    }
+
+    @Override
+    public List<TaskDto> getTaskByStatus(Status status) {
+    List<Task> task = taskRepository.findTaskByStatus(status);
+        if(task != null){
+           List <TaskDto> taskDto = convertToDTOList(task);
+            return taskDto;
+        }else {
+            return null;
+        }
+
+    }
+
+    private List <TaskDto> convertToDTOList(List<Task> task) {
+        List<TaskDto> dtoList = new ArrayList<>();
+
+        for(Task task1 : task){
+            TaskDto dto = new TaskDto();
+            dto.setTitle(task1.getTitle());
+            dto.setDescription(task1.getDescription());
+            dto.setDeadline(task1.getDeadline());
+            dto.setPriorityLevel(task1.getPriorityLevel());
+            dto.setStatus(task1.getStatus());
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
+
 }
 
 
