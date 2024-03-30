@@ -14,6 +14,10 @@ public interface TaskService {
 
     public List<Task> findTasksByUserId(Long UserId);
     public Task updateTask(Long taskId, TaskDto taskUpdateDto);
+    TaskDto createTask(TaskDto taskDTO);
+    TaskDto getTaskByTitle(String title);
+    TaskDto getTaskById(Long id);
+
 }
 
 
