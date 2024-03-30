@@ -16,6 +16,55 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+
+
+    public TaskDto createTask(TaskDto taskDTO) {
+        Task task = new Task();
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setDeadline(taskDTO.getDeadline());
+        task.setPriorityLevel(taskDTO.getPriorityLevel());
+        task.setStatus(taskDTO.getStatus());
+        Task savedTask = taskRepository.save(task);
+        taskDTO.setId(savedTask.getId());
+        return taskDTO;
+    }
+
+    @Override
+    public TaskDto getTaskByTitle(String title) {
+        Task task = taskRepository.findByTitle(title);
+        if (task != null) {
+            TaskDto taskDTO = convertToDTO(task);
+            return taskDTO;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public TaskDto getTaskById(Long id) {
+        Task task = taskRepository.findTaskById(id);
+        if(task != null){
+            TaskDto taskDto = convertToDTO(task);
+            return taskDto;
+        }else{
+            return null;
+        }
+    }
+
+
+    private TaskDto convertToDTO(Task task) {
+        TaskDto taskDTO = new TaskDto();
+        taskDTO.setId(task.getId());
+        taskDTO.setTitle(task.getTitle());
+        taskDTO.setDescription(task.getDescription());
+        taskDTO.setDeadline(task.getDeadline());
+        taskDTO.setPriorityLevel(task.getPriorityLevel());
+        taskDTO.setStatus(task.getStatus());
+        return taskDTO;
+    }
+
+
     @Override
     public List<Task> findTasksByUserId(Long userId) {
         return taskRepository.findByUserId_Id(userId);
