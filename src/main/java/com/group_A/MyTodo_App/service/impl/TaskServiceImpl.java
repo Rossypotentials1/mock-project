@@ -106,11 +106,35 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    @Override
+    public List<TaskDto> getCompletedTask() {
+                List<Task> task = taskRepository.findTaskByStatus(Status.COMPLETED);
+        if(task != null){
+            List <TaskDto> taskDto = convertToDTOList(task);
+            return taskDto;
+        }else {
+            return null;
+        }
+    }
+
+    //
+//    @Override
+//    public List<TaskDto> getCompletedTask() {
+//        List<Task> task = taskRepository.findTaskByStatus(Status.COMPLETED);
+//        if(task != null){
+//            List <TaskDto> taskDto = convertToDTOList(task);
+//            return taskDto;
+//        }else {
+//            return null;
+//        }
+//
+//    }
     private List <TaskDto> convertToDTOList(List<Task> task) {
         List<TaskDto> dtoList = new ArrayList<>();
 
         for(Task task1 : task){
             TaskDto dto = new TaskDto();
+            dto.setId(task1.getId());
             dto.setTitle(task1.getTitle());
             dto.setDescription(task1.getDescription());
             dto.setDeadline(task1.getDeadline());

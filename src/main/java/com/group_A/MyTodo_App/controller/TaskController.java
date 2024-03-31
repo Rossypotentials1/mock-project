@@ -64,5 +64,14 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/status")
+    public ResponseEntity<List<TaskDto>> getCompletedTasks() {
+        List<TaskDto> taskStatus = taskService.getCompletedTask();
+        if (taskStatus != null) {
+            return new ResponseEntity<>(taskStatus, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 

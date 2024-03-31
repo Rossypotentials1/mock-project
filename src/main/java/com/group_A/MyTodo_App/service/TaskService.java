@@ -20,6 +20,7 @@ public interface TaskService {
     TaskDto getTaskById(Long id);
     public Task deleteTask(Long taskId);
     List<TaskDto> getTaskByStatus(Status status);
+    List<TaskDto> getCompletedTask();
 
 }
 
