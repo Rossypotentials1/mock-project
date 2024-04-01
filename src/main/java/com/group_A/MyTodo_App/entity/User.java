@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Builder
 @Setter
@@ -25,6 +26,10 @@ public class User implements UserDetails {
     private String email;
     private String phoneNumber;
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

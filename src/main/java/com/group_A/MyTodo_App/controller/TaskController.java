@@ -16,9 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
-    @PostMapping("/new_task")
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDTO) {
-        TaskDto createdTask = taskService.createTask(taskDTO);
+    @PostMapping("/{id}/new_task")
+    public ResponseEntity<TaskDto> createTask(@PathVariable Long id, @RequestBody TaskDto taskDTO) {
+        TaskDto createdTask = taskService.createTask(id, taskDTO);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
     @GetMapping("/title/{title}")

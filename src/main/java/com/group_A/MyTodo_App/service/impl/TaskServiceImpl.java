@@ -2,9 +2,11 @@ package com.group_A.MyTodo_App.service.impl;
 
 import com.group_A.MyTodo_App.dto.TaskDto;
 import com.group_A.MyTodo_App.entity.Task;
+import com.group_A.MyTodo_App.entity.User;
 import com.group_A.MyTodo_App.enums.Status;
 import com.group_A.MyTodo_App.exceptions.TaskNotFoundException;
 import com.group_A.MyTodo_App.repository.TaskRepository;
+import com.group_A.MyTodo_App.repository.UserRepository;
 import com.group_A.MyTodo_App.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +20,18 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
 
-    public TaskDto createTask(TaskDto taskDTO) {
+    public TaskDto createTask(Long id, TaskDto taskDTO) {
+        User user = userRepository.findById(id).get();
         Task task = new Task();
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setDeadline(taskDTO.getDeadline());
         task.setPriorityLevel(taskDTO.getPriorityLevel());
         task.setStatus(taskDTO.getStatus());
+        task.setUser(user);
         Task savedTask = taskRepository.save(task);
         taskDTO.setId(savedTask.getId());
         return taskDTO;
