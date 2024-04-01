@@ -44,7 +44,6 @@ public class SecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .httpBasic(Customizer.withDefaults());
     security.authenticationProvider(authenticationProvider);
-
     return security.build();
   }
 
