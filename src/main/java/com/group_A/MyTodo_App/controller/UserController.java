@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +28,8 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequestDto loginRequestDto){
         return  ResponseEntity.ok(userService.login(loginRequestDto));
     }
-    @PostMapping("/logout")
+
+     @PostMapping("/logout")
     public ResponseEntity<String> logout (HttpServletRequest request, HttpServletResponse response){
         SecurityContextHolder.clearContext();
         new SecurityContextLogoutHandler().logout(request,null,null);
